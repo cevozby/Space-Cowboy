@@ -7,21 +7,20 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] float rotationSpeed;
-    float verticalInput, horizontalInput;
 
     Vector2 moveDir;
-
-    float verticle = 0;
-    float horizontal = 0;
 
     [SerializeField] float boundMin, boundMax;
 
     Rigidbody playerRB;
 
+    int levelCheck;
+
     // Start is called before the first frame update
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
+        levelCheck = Points.instance.level;
     }
 
     // Update is called once per frame
@@ -39,9 +38,9 @@ public class PlayerController : MonoBehaviour
         if (!PlayerManager.gameOver)
         {
             RotateBound();
-            PositionBound();
+            //PositionBound();
         }
-        
+        SpeedUp();
     }
 
     void Movement()
@@ -70,13 +69,23 @@ public class PlayerController : MonoBehaviour
         moveDir.y = value.Get<Vector2>().x;
     }
 
-    void PositionBound()
+    void SpeedUp()
     {
-        float horizontalBound = Mathf.Clamp(transform.position.x, boundMin, boundMax);
-        float verticalBound = Mathf.Clamp(transform.position.y, boundMin, boundMax);
-
-        transform.position = new Vector3(horizontalBound, verticalBound, transform.position.z);
+        if(levelCheck != Points.instance.level && speed < 0.5f)
+        {
+            speed += 0.025f;
+            levelCheck++;
+        }
     }
+
+    #region Boundies
+    //void PositionBound()
+    //{
+    //    float horizontalBound = Mathf.Clamp(transform.position.x, boundMin, boundMax);
+    //    float verticalBound = Mathf.Clamp(transform.position.y, boundMin, boundMax);
+
+    //    transform.position = new Vector3(horizontalBound, verticalBound, transform.position.z);
+    //}
 
     void RotateBound()
     {
@@ -103,5 +112,5 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(verticalBound, horizontalBound, 0f);
 
     }
-
+    #endregion
 }
