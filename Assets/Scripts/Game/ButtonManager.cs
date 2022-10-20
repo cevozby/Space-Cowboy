@@ -13,6 +13,7 @@ public class ButtonManager : MonoBehaviour
     public void RestartButton()
     {
         SceneManager.LoadScene("StartScene");
+        Time.timeScale = 1;
     }
 
     public void MenuButton()
