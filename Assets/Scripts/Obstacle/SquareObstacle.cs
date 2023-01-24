@@ -5,7 +5,7 @@ using UnityEngine;
 public class SquareObstacle : ObstacleSpawn
 {
     public List<GameObject> squareObstacles = new List<GameObject>();
-    string type = "Square";
+    string type = "Vertical";
 
     // Start is called before the first frame update
     void OnEnable()
@@ -19,7 +19,7 @@ public class SquareObstacle : ObstacleSpawn
         ObstacleList(squareObstacles);
         listLength = randomObstacles.Count;
 
-            if (listLength == 6)
+            if (listLength == 5)
             {
                 RandomObstacle(squareObstacles);
             }

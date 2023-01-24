@@ -11,6 +11,10 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] ParticleSystem explosion;
     [SerializeField] GameObject meteor;
     [SerializeField] GameObject rocks;
+    [SerializeField] GameObject warningScreen;
+
+    [SerializeField] float verticalBound, horizontalBound;
+    [SerializeField] float meteorBound;
 
     bool meteorCheck;
 
@@ -51,30 +55,22 @@ public class PlayerManager : MonoBehaviour
 
     void MeteorControl()
     {
-        //if((transform.position.x >= Mathf.Abs(15f) || transform.position.y >= Mathf.Abs(15f)) && !meteorCheck)
-        //{
-        //    meteorCheck = true;
-        //    meteor.SetActive(true);
-        //}
-        if (transform.position.x >= 15f && !meteorCheck)
+        
+        if (Mathf.Abs(transform.position.x) >= horizontalBound || Mathf.Abs(transform.position.y) >= verticalBound)
         {
-            meteorCheck = true;
-            meteor.transform.position = new Vector3(transform.position.x + 20f, transform.position.y + 20f, transform.position.z + 20f);
-            meteor.SetActive(true);
+            warningScreen.SetActive(true);
+            
+            if ((Mathf.Abs(transform.position.x) >= horizontalBound + meteorBound || 
+                Mathf.Abs(transform.position.y) >= verticalBound + meteorBound) && !meteorCheck)
+            {
+                meteorCheck = true;
+                meteor.SetActive(true);
+            }
         }
-        else if (transform.position.x <= -15f && !meteorCheck)
+        else if ((Mathf.Abs(transform.position.x) <= horizontalBound || Mathf.Abs(transform.position.y) <= verticalBound) && !meteorCheck)
         {
-            meteorCheck = true;
-            meteor.transform.position = new Vector3(transform.position.x - 20f, transform.position.y + 20f, transform.position.z + 20f);
-            meteor.SetActive(true);
+            warningScreen.SetActive(false);
         }
-        else if (transform.position.y >= Mathf.Abs(15f) && !meteorCheck)
-        {
-            meteorCheck = true;
-            meteor.transform.position = new Vector3(transform.position.x, transform.position.y + 20f, transform.position.z + 20f);
-            meteor.SetActive(true);
-        }
-
     }
 
     IEnumerator GameOver()

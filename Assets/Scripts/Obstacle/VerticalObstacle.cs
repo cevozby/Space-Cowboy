@@ -18,7 +18,7 @@ public class VerticalObstacle : ObstacleSpawn
     {
         ObstacleList(verticalObstacles);
         listLength = randomObstacles.Count;
-        if (listLength == 6 && Points.instance.level < 3)
+        if (listLength == 5 && Points.instance.level < 3)
            {
               RandomObstacle(verticalObstacles);
            }

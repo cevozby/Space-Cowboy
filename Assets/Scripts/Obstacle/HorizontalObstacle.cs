@@ -19,7 +19,7 @@ public class HorizontalObstacle : ObstacleSpawn
         ObstacleList(horizontalObstacles);
         listLength = randomObstacles.Count;
 
-            if (listLength == 6)
+            if (listLength == 5)
             {
                 RandomObstacle(horizontalObstacles);
             }
