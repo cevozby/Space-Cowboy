@@ -8,6 +8,7 @@ public class ObstacleSpawn : MonoBehaviour
 
     protected int listLength;
 
+    public static bool isContinue;
 
     static float lastPoint;
 
@@ -18,6 +19,8 @@ public class ObstacleSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //isContinue = true;
+        //Debug.Log("Start: " + isContinue);
         //lastPoint = -50f;
         distance = 25f;
         minValue = -10f;
@@ -29,7 +32,7 @@ public class ObstacleSpawn : MonoBehaviour
     void Update()
     {
         
-        listLength = randomObstacles.Count;
+        //listLength = randomObstacles.Count;
 
 
     }
@@ -41,7 +44,7 @@ public class ObstacleSpawn : MonoBehaviour
             for (int i = 0; i < obstacles.Count; i++)
             {
                 lastPoint += distance;
-                Debug.Log(lastPoint);
+                //Debug.Log(lastPoint);
                 obstacles[i].transform.position = new Vector3(obstacles[i].transform.position.x, Random.Range(minValue, maxValue),
                     lastPoint + distance);
             }
@@ -53,7 +56,7 @@ public class ObstacleSpawn : MonoBehaviour
                 lastPoint += distance;
                 obstacles[i].transform.position = new Vector3(Random.Range(minValue, maxValue), obstacles[i].transform.position.y,
                     lastPoint + distance);
-                Debug.Log("Distance plus last point: " + (lastPoint + distance));
+                //Debug.Log("Distance plus last point: " + (lastPoint + distance));
                 
             }
         }
@@ -65,23 +68,32 @@ public class ObstacleSpawn : MonoBehaviour
     {
         if (PlayerManager.planeTouch)
         {
-            obstacles[0].SetActive(false);
-            randomObstacles.Add(obstacles[0]);
-            obstacles.Remove(obstacles[0]);
-            //GameObject obstacle = obstacles[0];
-            //VerticleRandom(obstacle);
-            //obstacles.RemoveAt(0);
-            //obstacles.Add(obstacle);
-
+            //obstacles[0].SetActive(false);
+            //randomObstacles.Add(obstacles[0]);
+            //obstacles.Remove(obstacles[0]);
+            Debug.Log("Function: " + isContinue);
+            GameObject obstacle = obstacles[0];
+            if (isContinue) VerticleRandom(obstacle);
+            else obstacle.SetActive(false);
+            obstacles.RemoveAt(0);
+            obstacles.Add(obstacle);
             PlayerManager.planeTouch = false;
         }
+        
     }
 
     void VerticleRandom(GameObject obstacle)
     {
         lastPoint += distance;
-        Debug.Log(lastPoint);
+        //Debug.Log(lastPoint);
         obstacle.transform.position = new Vector3(obstacle.transform.position.x, Random.Range(minValue, maxValue),
+                    lastPoint + distance);
+    }
+
+    void HorizontalRandom(GameObject obstacle)
+    {
+        lastPoint += distance;
+        obstacle.transform.position = new Vector3(Random.Range(minValue, maxValue), obstacle.transform.position.x,
                     lastPoint + distance);
     }
 

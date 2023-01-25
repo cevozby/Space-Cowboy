@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject horizontal, vertical, square;
     [SerializeField] List<GameObject> levels;
 
+    [SerializeField] int levelPoint;
+
     int level;
 
     bool isLevelUp;
@@ -15,6 +17,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ObstacleSpawn.isContinue = true;
         level = 0;
     }
 
@@ -34,12 +37,21 @@ public class GameManager : MonoBehaviour
         //    horizontal.SetActive(false);
         //    square.SetActive(true);
         //}
-
+        StopLevel();
         NextLevel();
-
+        
         if (PlayerManager.gameOver)
         {
             SceneManager.LoadScene("GameOver");
+        }
+    }
+
+    void StopLevel()
+    {
+        if(!isLevelUp && Points.instance.points == levelPoint / 2 + 1)
+        {
+            ObstacleSpawn.isContinue = false;
+            Debug.Log("GameManager: " + ObstacleSpawn.isContinue);
         }
     }
 
@@ -52,13 +64,20 @@ public class GameManager : MonoBehaviour
         else if (!isLevelUp && Points.instance.points % 20 == 0 && Points.instance.points != 0)
         {
             isLevelUp = true;
-            levels[level].SetActive(false);
-            level++;
+            StartCoroutine(ClosedPreviousLevel());
         }
         else if (isLevelUp && Points.instance.points % 20 == 1)
         {
             isLevelUp = false;
         }
+    }
+
+    IEnumerator ClosedPreviousLevel()
+    {
+        yield return new WaitForSeconds(0.5f);
+        ObstacleSpawn.isContinue = true;
+        levels[level].SetActive(false);
+        level++;
     }
 
 }
