@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float rotationSpeed;
 
+
     Vector2 moveDir;
 
     [SerializeField] float boundMin, boundMax;
@@ -50,8 +51,8 @@ public class PlayerController : MonoBehaviour
         //horizontalInput = Input.GetAxis("Horizontal");
 
         // move the plane forward at a constant rate
-        transform.Translate(Vector3.forward * speed);
-        //playerRB.velocity = Vector3.forward * speed;
+        //transform.Translate(Vector3.forward * speed);
+        playerRB.velocity = transform.forward * speed;
 
         // tilt the plane up/down based on up/down arrow keys
         //transform.Rotate(Vector3.right * rotationSpeed * moveDir.y);

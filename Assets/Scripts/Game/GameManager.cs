@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     void StopLevel()
     {
-        if(!isLevelUp && Points.instance.points == levelPoint / 2 + 1)
+        if(!isLevelUp && Points.instance.points % levelPoint == 11 && Points.instance.points > 1)
         {
             ObstacleSpawn.isContinue = false;
             Debug.Log("GameManager: " + ObstacleSpawn.isContinue);
@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         ObstacleSpawn.isContinue = true;
+        Debug.Log("NextLevel: " + ObstacleSpawn.isContinue);
         levels[level].SetActive(false);
         level++;
     }
